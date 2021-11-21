@@ -1,13 +1,9 @@
-import aiohttp, typing, codecs, io
+import aiohttp, codecs
 from aiohttp import ClientSession
-from typing import Optional
 from codecs import decode, encode
-from io import BytesIO
-import logging
 
 BASE_URL = "http://api.guardiansystem.xyz/v1"
 
-log = logging.getLogger(__name__)
 
 class GuardClient:
     """
