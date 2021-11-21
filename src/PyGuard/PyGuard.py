@@ -4,6 +4,7 @@ from codecs import decode, encode
 
 BASE_URL = "http://api.guardiansystem.xyz/v1"
 
+# CHORE: Add request builder and Exception handler
 
 class GuardClient:
     """
