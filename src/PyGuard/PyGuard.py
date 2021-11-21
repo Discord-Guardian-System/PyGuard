@@ -46,6 +46,68 @@ class GuardClient:
 
 
 class Request:
-    pass
-       
+    def __init__(self):
+        self.route = None
+        self.headers = None
+        self.method = None
+        self.credentials = GuardClient.credentials()
 
+    def setRoute(self, route: str):
+        """
+        Sets the route for the request. Must be an accepted Endpoint. 
+
+        ~@`Routes`:
+            - `/offenders`: Fetches users in the database \n
+                    Methods: `GET`
+            - `/servers`: Fetches offending servers \n
+                    Methods: `GET`
+            - `/links`: Fetches a know scamlink by URL \n
+                    Methods: `GET`
+            - `/reports`: Submits or Fetches a report & its status \n
+                    Methods: `GET`, `POST`
+            - `/requests`: Submit or Fetch a request for your Data \n
+                    Methods: `GET`, `POST`
+        """
+        if route.startswith("/"):
+            
+            if self.method == "GET":
+                self.route = BASE_URL + route
+            
+            elif self.method == 'POST':
+                self.route = route
+            
+            else: return
+        
+        else:
+            
+            if self.method == 'GET':
+                self.route = BASE_URL + "/" + route
+            
+            elif self.method == "POST":
+                self.route = "/" + route
+            
+            else: return
+        
+    def setMethod(self, method: str):
+        """
+        Sets the method for the request. Methods must only be that of `GET` or `POST`.
+        See `.setRoute()` for accepted request methods per route.
+        """
+        accepted = ["GET", "POST"]
+        if not method.upper() in accepted:
+            return
+        else:
+            self.method = method.upper()
+
+    def setHeaders(self):
+        """
+        Sets the header for the response. Providing the credentials from `.login()` for authentication.
+        """
+        self.headers = {
+            "Method": self.method,
+            "Host": BASE_URL,
+            "Path": self.route,
+            "Protocol": "HTTP/1.1",
+            "Content-type": "Application/JSON",
+            "Authorization": "Basic " + self.credentials 
+        }
