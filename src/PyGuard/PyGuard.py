@@ -96,6 +96,7 @@ class Request:
         """
         accepted = ["GET", "POST"]
         if not method.upper() in accepted:
+            print("PYGUARD ERROR: Invalid method type: {} \nAccepted Methods: \n\"POST\" \n\"GET\"".format(method))
             return
         else:
             self.method = method.upper()
